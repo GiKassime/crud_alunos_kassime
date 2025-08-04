@@ -1,45 +1,53 @@
-<?php 
-//incluir o header
-require_once (__DIR__.'/../../controller/AlunoController.php');
-include_once (__DIR__.'/../include/header.php');
-$alunoCont = new AlunoController();
-$lista = $alunoCont->listar();
+<?php
+    require_once(__DIR__ . "/../../controller/AlunoController.php");   
+
+    //Chamar o controller para obter a lista de alunos
+    $alunoCont = new AlunoController();
+    $lista = $alunoCont->listar();
+
+    //print_r($lista);
+
+
+    //Incluir o header
+    include_once(__DIR__ . "/../include/header.php");
 ?>
 
+<h3>Listagem de Alunos</h3> 
+
+<div>
+    <a href="inserir.php">Inserir</a>
+</div>
+
 <table border="1">
+    <!-- Cabeçalho -->
     <tr>
         <th>ID</th>
         <th>Nome</th>
         <th>Idade</th>
         <th>Estrangeiro</th>
-        <th>ID_Curso</th>
         <th>Curso</th>
-        <th>Turno</th>
+        <th></th>
+        <th></th>
     </tr>
-    <?php 
-    foreach ($lista as $aluno): ?>
+
+    <!-- Dados -->
+    <?php foreach($lista as $aluno): ?>
         <tr>
-
-            <td><?= $aluno->getId()?></td>
-            <td><?= $aluno->getNome()?></td>
-
-            <td><?= $aluno->getIdade()?></td>
-            <td><?= $aluno->getEstrangeiroTexto()?></td>
-            <?php $curso = $aluno->getCurso();?>
-            <td><?= $curso->getId()?></td>
-
-            <td><?= $curso->getNome()?></td>
-            <td><?= $curso->getTurnoTexto()?></td>
-
-
-
-
-
+            <td><?= $aluno->getId() ?></td>
+            <td><?= $aluno->getNome() ?></td>
+            <td><?= $aluno->getIdade() ?></td>
+            <td><?= $aluno->getEstrangeiroTexto() ?></td>
+            <td><?= $aluno->getCurso() ?></td>
+            <td></td>
+            <td></td>
         </tr>
-    <?php endforeach;?>
+    <?php endforeach; ?>
+
 
 </table>
+
 <?php
-//incluir o footer
-include_once (__DIR__.'/../include/footer.php');
+    //Incluir o footer
+    include_once(__DIR__ . "/../include/footer.php");   
 ?>
+    
