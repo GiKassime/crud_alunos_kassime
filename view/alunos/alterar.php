@@ -1,12 +1,13 @@
 <?php
-
 require_once(__DIR__ . "/../../model/Aluno.php");
 require_once(__DIR__ . "/../../controller/AlunoController.php");
-$msgErro = "";
+
+
 $aluno = null;
-//Receber os dados do formulário
-if(isset($_POST['nome'])) {
-    //Usuário já clicou no gravar
+$msgErro = "";
+$id = null;
+if (isset($_POST['nome'])) {
+   //Usuário já clicou no gravar
     $nome  = trim($_POST['nome']) ? trim($_POST['nome']) : NULL ;
     $idade = is_numeric($_POST['idade']) ? $_POST['idade'] : NULL ;
     $estrangeiro = trim($_POST['estrang']) ? trim($_POST['estrang']) : NULL ;
@@ -14,6 +15,7 @@ if(isset($_POST['nome'])) {
 
     //Criar um objeto Aluno para persistí-lo
     $aluno = new Aluno();
+    $aluno->setId($id);
     $aluno->setNome($nome);
     $aluno->setIdade($idade);
     $aluno->setEstrangeiro($estrangeiro);
@@ -21,23 +23,32 @@ if(isset($_POST['nome'])) {
     $curso = new Curso();
     $curso->setId($idCurso);
     $aluno->setCurso($curso);
-    //print_r($aluno);
-
-    //Chamar o DAO para salvar o objeto Aluno
+    //chamando o alterar do controller
     $alunoCont = new AlunoController();
   
 
-    $erros =  $alunoCont->inserir($aluno);
+    $erros =  $alunoCont->alterar($aluno);
     if (!$erros) {    
-    //Redirecionar para o listar
         header("location: listar.php");
 
     }else{
         $msgErro = implode("<br>", $erros);
     }
-    //Redirecionar para o listar
+} else {
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+    if ($id == null) {
+        echo "ID não informado.<br><a href='listar.php'>Voltar</a>";
+        exit;
+    }
+    $alunoCont = new AlunoController();
+    $aluno = $alunoCont->buscarPorId($id);
+
+    if (!$aluno) {
+        echo "Aluno não encontrado.<br><a href='listar.php'>Voltar</a>";
+        exit;
+    }
+
 }
 
 
 include_once(__DIR__ . "/form.php");
-?>

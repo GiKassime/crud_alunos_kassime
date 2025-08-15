@@ -26,8 +26,8 @@
         <th>Idade</th>
         <th>Estrangeiro</th>
         <th>Curso</th>
-        <th></th>
-        <th></th>
+        <th>Editar</th>
+        <th>Excluir</th>
     </tr>
 
     <!-- Dados -->
@@ -38,8 +38,8 @@
             <td><?= $aluno->getIdade() ?></td>
             <td><?= $aluno->getEstrangeiroTexto() ?></td>
             <td><?= $aluno->getCurso() ?></td>
-            <td></td>
-            <td></td>
+            <th><a href="./alterar.php?id=<?= $aluno->getId() ?>"><img src="./../../img/btn_editar.png" alt=""></a></th>
+            <th><a href="./excluir.php?id=<?= $aluno->getId() ?>"><img src="./../../img/btn_excluir.png" alt=""></a></th>
         </tr>
     <?php endforeach; ?>
 

@@ -18,7 +18,8 @@ class AlunoDAO
         $sql = "SELECT a.*, 
                     c.nome nome_curso, c.turno turno_curso 
                 FROM alunos a
-                    JOIN cursos c ON (c.id = a.id_curso)";
+                    JOIN cursos c ON (c.id = a.id_curso)
+                ORDER BY a.nome";
         $stm = $this->conexao->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();
@@ -64,5 +65,35 @@ class AlunoDAO
             array_push($alunos, $aluno);
         }
         return $alunos;
+    }
+
+    public function alterar(Aluno $aluno){
+        try {
+            $sql = "UPDATE alunos SET nome = ?, idade = ?, estrangeiro = ?, id_curso = ?
+                    WHERE id = ?";
+            $stm = $this->conexao->prepare($sql);
+            $stm->execute([
+                $aluno->getNome(),
+                $aluno->getIdade(),
+                $aluno->getEstrangeiro(),
+                $aluno->getCurso()->getId(),
+                $aluno->getId()
+            ]);
+        } catch (PDOException $erro) {
+            return $erro;
+        }
+    }
+
+    public function buscarPorId(int $id){
+        $sql = "SELECT a.*, 
+                    c.nome nome_curso, c.turno turno_curso 
+                FROM alunos a
+                    JOIN cursos c ON (c.id = a.id_curso)
+                WHERE a.id = ?";
+        $stm = $this->conexao->prepare($sql);
+        $stm->execute([$id]);
+        $result = $stm->fetchAll();
+        $alunos = $this->map($result);
+        return $alunos[0] ?? null;
     }
 }
