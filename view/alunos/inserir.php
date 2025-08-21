@@ -14,6 +14,7 @@ if(isset($_POST['nome'])) {
 
     //Criar um objeto Aluno para persistí-lo
     $aluno = new Aluno();
+    $aluno->setId(0);
     $aluno->setNome($nome);
     $aluno->setIdade($idade);
     $aluno->setEstrangeiro($estrangeiro);
@@ -21,7 +22,6 @@ if(isset($_POST['nome'])) {
     $curso = new Curso();
     $curso->setId($idCurso);
     $aluno->setCurso($curso);
-    //print_r($aluno);
 
     //Chamar o DAO para salvar o objeto Aluno
     $alunoCont = new AlunoController();

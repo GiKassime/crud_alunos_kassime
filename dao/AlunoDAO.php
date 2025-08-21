@@ -69,7 +69,8 @@ class AlunoDAO
 
     public function alterar(Aluno $aluno){
         try {
-            $sql = "UPDATE alunos SET nome = ?, idade = ?, estrangeiro = ?, id_curso = ?
+            $sql = "UPDATE alunos 
+                    SET nome = ?, idade = ?, estrangeiro = ?, id_curso = ?
                     WHERE id = ?";
             $stm = $this->conexao->prepare($sql);
             $stm->execute([
@@ -79,6 +80,7 @@ class AlunoDAO
                 $aluno->getCurso()->getId(),
                 $aluno->getId()
             ]);
+            return NULL;
         } catch (PDOException $erro) {
             return $erro;
         }
@@ -95,5 +97,15 @@ class AlunoDAO
         $result = $stm->fetchAll();
         $alunos = $this->map($result);
         return $alunos[0] ?? null;
+    }
+    public function excluir(int $id) {
+        try {
+            $sql = "DELETE FROM alunos WHERE id = ?";
+            $stm = $this->conexao->prepare($sql);
+            $stm->execute([$id]);
+            return NULL;
+        } catch (PDOException $erro) {
+            return $erro;
+        }
     }
 }

@@ -8,6 +8,7 @@ $msgErro = "";
 $id = null;
 if (isset($_POST['nome'])) {
    //Usuário já clicou no gravar
+    $id =  is_numeric($_POST['id']) ? $_POST['id'] : NULL ;
     $nome  = trim($_POST['nome']) ? trim($_POST['nome']) : NULL ;
     $idade = is_numeric($_POST['idade']) ? $_POST['idade'] : NULL ;
     $estrangeiro = trim($_POST['estrang']) ? trim($_POST['estrang']) : NULL ;
@@ -25,7 +26,6 @@ if (isset($_POST['nome'])) {
     $aluno->setCurso($curso);
     //chamando o alterar do controller
     $alunoCont = new AlunoController();
-  
 
     $erros =  $alunoCont->alterar($aluno);
     if (!$erros) {    
