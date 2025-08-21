@@ -8,8 +8,17 @@ if (!$id) {
     exit;
 }
 if($alunoCont->buscarPorId($id)){
-    $alunoCont->excluir($id);
-    header("location: listar.php");
+    $erro = $alunoCont->excluir($id);
+    if(!$erro){
+        //Redirecionar para o listar
+        header("location: listar.php");
+        exit;
+    }else{
+        echo "Erro ao excluir o aluno.";
+        echo "<br>" . $erro->getMessage();
+        echo "<br><a href='listar.php'>Voltar</a>";
+        exit;
+    }
 }else{
     echo "Aluno não encontrado.";
     echo "<br><a href='listar.php'>Voltar</a>";
